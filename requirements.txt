@@ -1,2 +1,7 @@
 nltk
 pytest
+toolz
+requests
+ipython
+python-dotenv
+appdirs
