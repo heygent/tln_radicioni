@@ -6,17 +6,25 @@ import csv
 
 
 def lcs(word_1, word_2):
+
     # prendi l'insieme dei synset
-    s1: List[Synset] = wn.synsets(word_1)
-    s2: List[Synset] = wn.synsets(word_2)
+    synset1: List[Synset] = wn.synsets(word_1)
+    synset2: List[Synset] = wn.synsets(word_2)
+
     # calcola tutti i percorsi degli iperonimi
-    h1 = s1[0].hypernym_paths()
-    h2 = s2[0].hypernym_paths()
-    # prendi il percorso più lungo
-    max_h1 = max(h1, key=len)
-    max_h2 = max(h2, key=len)
-    # restituisci l'intersezione dei due percorsi, ovvero gli antenati comuni
-    return list(set(max_h1).intersection(max_h2))
+    hypernym_paths1 = synset1[0].hypernym_paths()
+    hypernym_paths2 = synset2[0].hypernym_paths()
+
+    # tra gli antenati comuni prendo quello il cui percorso minimo alla radice è più lungo degli altri antenati
+    # calcolo gli antenati comuni intersecando i percorsi alla radice della prima e della seconda parola
+    # ogni parola potrebbe avere più percorsi alla radice, effetuiamo l'intersezione tra tutti i percorsi che otteniamo.
+    LCS = max([
+        max(set(path1).intersection(path2), key=lambda x: x.min_depth())
+        for path1 in hypernym_paths1
+        for path2 in hypernym_paths2
+    ], key=lambda x: x.min_depth())
+
+    return LCS
 
 
 def wu_palmer():
