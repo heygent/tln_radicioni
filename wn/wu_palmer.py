@@ -11,11 +11,11 @@ def lcs(sense_1: Synset, sense_2: Synset) -> Synset:
     hypernym_paths1 = sense_1.hypernym_paths()
     hypernym_paths2 = sense_2.hypernym_paths()
 
-    # creo due liste contenenti tutti gli iperonimi
+    # creo due insiemi contenenti tutti gli iperonimi
     all_hypernims1 = {synset for synsets in hypernym_paths1 for synset in synsets}
     all_hypernims2 = {synset for synsets in hypernym_paths2 for synset in synsets}
 
-    # calcolo l'intersezioni delle due liste di iperonimi, ovvero gli antenati comuni
+    # calcolo l'intersezionetra i  due insiemi di iperonimi, ovvero l'insieme degli antenati comuni
     intersection = all_hypernims1.intersection(all_hypernims2)
 
     # tra gli antenati comuni prendo quello il cui percorso minimo alla radice è più lungo degli altri antenati
