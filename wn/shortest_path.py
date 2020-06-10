@@ -54,6 +54,17 @@ def sim_path(sense_1, sense_2):
     return 2 * depthMAX - shortest_path
 
 
+def normalize(values):
+
+    min_value = min(values)
+    max_value = max(values)
+
+    return [
+        (value - min_value) / (max_value - min_value)
+        for value in values
+    ]
+
+
 def my_sim_path():
     with open('resources/WordSim353.csv') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -70,7 +81,7 @@ def my_sim_path():
 
             result.append(max_similarity)
 
-        return result
+        return normalize(result)
 
 
 if __name__ == "__main__":
